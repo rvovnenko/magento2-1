@@ -30,9 +30,7 @@ class TransactionRefund extends AbstractTransaction implements ClientInterface
         \zipMoney\Api\RefundsApi $refundsApi,
         array $data = []
     ) {
-       
        parent::__construct($context,$encryptor,$payloadHelper,$logger,$helper,$config);
-
        $this->_service = $refundsApi;
     }
 
@@ -44,7 +42,16 @@ class TransactionRefund extends AbstractTransaction implements ClientInterface
     {
         $request = $transferObject->getBody();
         $payload = $request['payload'];
-        
+        $storeId = isset($request['store_id']) ? $request['store_id'] : null;
+        // reset API depend on payload
+        $this->_logger->info("refund store id: " . $storeId);
+        $apiConfig = new \zipMoney\Configuration();
+        $apiConfig->setApiKey('Authorization', $this->_config->getMerchantPrivateKey($storeId))
+              ->setApiKeyPrefix('Authorization', 'Bearer')
+              ->setEnvironment($this->_config->getEnvironment($storeId))
+              ->setPlatform("Magento/".$this->_helper->getMagentoVersion()."ZipMoney_ZipMoneyPayment/".$this->_helper->getExtensionVersion());
+        $this->_service->setApiClient(new \zipMoney\ApiClient($apiConfig));
+
         $response = null;
 
         try {

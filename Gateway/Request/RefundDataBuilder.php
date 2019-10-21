@@ -48,6 +48,7 @@ class RefundDataBuilder extends AbstractDataBuilder
         }
     
         $return['payload'] = $payload;
+        $return['store_id'] = $order->getStoreId();
         $return['txn_id'] = $payment->getLastTransId();
    
         return $return;

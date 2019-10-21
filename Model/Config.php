@@ -263,9 +263,9 @@ class Config implements ConfigInterface
    *
    * @return int
    */
-  public function getMerchantPrivateKey()
+  public function getMerchantPrivateKey($storeId = null)
   {
-    return $this->getConfigData(self::PAYMENT_ZIPMONEY_PRIVATE_KEY);
+    return $this->getConfigData(self::PAYMENT_ZIPMONEY_PRIVATE_KEY, $storeId);
   }
 
   /**
@@ -273,9 +273,9 @@ class Config implements ConfigInterface
    *
    * @return string
    */
-  public function getMerchantPublicKey()
+  public function getMerchantPublicKey($storeId = null)
   {
-    return $this->getConfigData(self::PAYMENT_ZIPMONEY_PUBLIC_KEY);
+    return $this->getConfigData(self::PAYMENT_ZIPMONEY_PUBLIC_KEY, $storeId);
   }
 
   /**
@@ -283,9 +283,9 @@ class Config implements ConfigInterface
    *
    * @return string
    */
-  public function getEnvironment()
+  public function getEnvironment($storeId = null)
   {
-    return $this->getConfigData(self::PAYMENT_ZIPMONEY_ENVIRONMENT);
+    return $this->getConfigData(self::PAYMENT_ZIPMONEY_ENVIRONMENT, $storeId);
   }
 
   /**
